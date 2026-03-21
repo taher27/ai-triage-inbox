@@ -102,11 +102,11 @@ export function useAIAnalysis(messageId: string) {
       });
 
       try {
-        const result = await analyzeMessage(messageId, controller.signal);
+        const { result, debug } = await analyzeMessage(messageId, controller.signal);
         if (controller.signal.aborted) return; // raced — discard
 
         setAICache(messageId, result);
-        setAIState(messageId, { status: 'success', result });
+        setAIState(messageId, { status: 'success', result, debugInfo: debug });
         startStreaming(messageId, result.draft_reply);
       } catch (err) {
         if (controller.signal.aborted) return;
@@ -115,7 +115,11 @@ export function useAIAnalysis(messageId: string) {
           err instanceof AIServiceError || err instanceof AIValidationError
             ? err.message
             : 'An unexpected error occurred.';
-        setAIState(messageId, { status: 'error', error: msg });
+
+        const debugInfo =
+          err instanceof AIServiceError ? (err.debug as import('../types').AIDebugInfo) : null;
+
+        setAIState(messageId, { status: 'error', error: msg, debugInfo });
       }
     },
     [messageId, cachedResult, setAIState, setAICache, startStreaming],

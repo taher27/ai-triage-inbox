@@ -3,6 +3,7 @@ import { useInboxStore, selectAIState } from '../../store/useInboxStore';
 import type { AICategory } from '../../types';
 import { Skeleton } from './Skeleton';
 import { useAIAnalysis } from '../../hooks/useAIAnalysis';
+import { DebugPanel } from './DebugPanel';
 
 // ─── Category chip colours ────────────────────────────────────────────────────
 
@@ -270,6 +271,8 @@ export function AIPanel({ messageId }: AIPanelProps) {
           </div>
         </div>
       )}
+
+      <DebugPanel messageId={messageId} />
     </section>
   );
 }

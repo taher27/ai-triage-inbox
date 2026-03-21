@@ -1,5 +1,11 @@
 import { z } from 'zod';
-import type { AIResult } from '../types';
+import type { AIResult, AIDebugInfo } from '../types';
+
+/** Returned on every successful call — result + debug metadata. */
+export interface AIAnalysisResult {
+  result: AIResult;
+  debug: AIDebugInfo;
+}
 
 // ─── Zod schema ───────────────────────────────────────────────────────────────
 
@@ -234,9 +240,12 @@ function hashId(id: string): number {
 // ─── Exported errors ──────────────────────────────────────────────────────────
 
 export class AIServiceError extends Error {
-  constructor(message: string) {
+  /** Partial debug info available even when the call fails. */
+  readonly debug: Partial<AIDebugInfo>;
+  constructor(message: string, debug: Partial<AIDebugInfo>) {
     super(message);
     this.name = 'AIServiceError';
+    this.debug = debug;
   }
 }
 
@@ -261,32 +270,41 @@ export class AIValidationError extends Error {
 export async function analyzeMessage(
   messageId: string,
   signal?: AbortSignal,
-): Promise<AIResult> {
+): Promise<AIAnalysisResult> {
+  const startTime = Date.now();
+
   // Simulate latency: 200–1200ms
   const delay = 200 + (hashId(messageId + 'delay') % 1001);
   await sleep(delay, signal);
 
-  // 12% random failure (seeded by messageId so it's stable per message)
-  const failureSeed = (hashId(messageId + 'fail') % 100);
+  const latencyMs = Date.now() - startTime;
+  const templateIndex = hashId(messageId) % TEMPLATES.length;
+  const failureSeed = hashId(messageId + 'fail') % 100;
+
+  // 12% failure rate (seeded — same message always fails or always passes)
   if (failureSeed < 12) {
     throw new AIServiceError(
       'AI service unavailable — upstream model returned 503. Please try again.',
+      { latencyMs, templateIndex, failureSeed, rawResponse: null, validationPassed: false, validationErrors: null },
     );
   }
 
   // Pick template deterministically
-  const raw = TEMPLATES[hashId(messageId) % TEMPLATES.length];
+  const raw = TEMPLATES[templateIndex];
 
-  // Validate with Zod (this will throw AIValidationError if schema doesn't match)
+  // Validate with Zod
   const parsed = AIResultSchema.safeParse(raw);
+  const validationPassed = parsed.success;
+  const validationErrors = parsed.success ? null : parsed.error.issues;
+
   if (!parsed.success) {
-    throw new AIValidationError(
-      'AI response failed schema validation.',
-      parsed.error.issues,
-    );
+    throw new AIValidationError('AI response failed schema validation.', validationErrors);
   }
 
-  return parsed.data as AIResult;
+  return {
+    result: parsed.data as AIResult,
+    debug: { rawResponse: raw, validationPassed, validationErrors, latencyMs, templateIndex, failureSeed },
+  };
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────

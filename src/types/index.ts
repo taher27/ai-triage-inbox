@@ -42,6 +42,16 @@ export interface AIResult {
 
 export type AIStatus = 'idle' | 'loading' | 'success' | 'error';
 
+/** Metadata captured from every AI call — visible in Debug Mode. */
+export interface AIDebugInfo {
+  rawResponse: unknown;       // template object before Zod validation
+  validationPassed: boolean;
+  validationErrors: unknown;  // Zod issues array, or null
+  latencyMs: number;          // simulated network latency
+  templateIndex: number;      // which of the 9 templates was selected
+  failureSeed: number;        // 0–99; call throws when < 12
+}
+
 export interface AIState {
   result: AIResult | null;
   status: AIStatus;
@@ -49,4 +59,5 @@ export interface AIState {
   streamedDraft: string;
   isStreaming: boolean;
   userEditedDraft: boolean;
+  debugInfo: AIDebugInfo | null;
 }

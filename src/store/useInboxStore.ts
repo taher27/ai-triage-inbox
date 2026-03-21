@@ -45,6 +45,7 @@ const defaultAIState = (): AIState => ({
   streamedDraft: '',
   isStreaming: false,
   userEditedDraft: false,
+  debugInfo: null,
 });
 
 export const useInboxStore = create<InboxState>((set, get) => ({
@@ -141,6 +142,7 @@ export const DEFAULT_AI_STATE: AIState = {
   streamedDraft: '',
   isStreaming: false,
   userEditedDraft: false,
+  debugInfo: null,
 };
 
 // Selector helpers (use these in components to avoid re-renders)
