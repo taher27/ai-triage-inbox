@@ -132,20 +132,24 @@ export const useInboxStore = create<InboxState>((set, get) => ({
   ...{ _defaultAIState: defaultAIState },
 }));
 
+// Stable fallback — module-level constant so Zustand's Object.is check never
+// sees a new reference when the AI state for a message hasn't been set yet.
+export const DEFAULT_AI_STATE: AIState = {
+  result: null,
+  status: 'idle',
+  error: null,
+  streamedDraft: '',
+  isStreaming: false,
+  userEditedDraft: false,
+};
+
 // Selector helpers (use these in components to avoid re-renders)
 export const selectMessages = (s: InboxState) => s.messages;
 export const selectSelectedId = (s: InboxState) => s.selectedId;
 export const selectSelectedMessage = (s: InboxState) =>
   s.messages.find((m) => m.id === s.selectedId) ?? null;
 export const selectAIState = (id: string) => (s: InboxState) =>
-  s.aiState[id] ?? {
-    result: null,
-    status: 'idle' as const,
-    error: null,
-    streamedDraft: '',
-    isStreaming: false,
-    userEditedDraft: false,
-  };
+  s.aiState[id] ?? DEFAULT_AI_STATE;
 export const selectAICache = (id: string) => (s: InboxState) =>
   s.aiCache[id] ?? null;
 export const selectNotes = (id: string) => (s: InboxState) =>
