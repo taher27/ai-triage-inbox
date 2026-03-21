@@ -144,6 +144,7 @@ Selector functions that return object literals create a new reference every rend
 
 Run `npm run build && npm run preview` then open Chrome DevTools → Lighthouse.
 
+- Screenshot added at: `src\assets\light-house\*`
 ---
 
 ## Total hours
