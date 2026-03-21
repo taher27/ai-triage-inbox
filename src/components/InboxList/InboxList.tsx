@@ -133,7 +133,7 @@ export function InboxList() {
               </span>
             )}
           </h2>
-          <span className="text-xs text-[#9aa0a6]">
+          <span className="text-xs text-[#6b7280]">
             {filteredMessages.length} / {messages.length}
           </span>
         </div>
@@ -217,7 +217,7 @@ export function InboxList() {
           aria-label="Select all visible messages"
           className="h-3.5 w-3.5 rounded border-[#dadce0] accent-[#1a73e8] cursor-pointer"
         />
-        <span className="text-xs text-[#9aa0a6]">Select all</span>
+        <span className="text-xs text-[#6b7280]">Select all</span>
       </div>
 
       {/* Message list */}
@@ -225,6 +225,7 @@ export function InboxList() {
         ref={listRef}
         role="listbox"
         aria-label="Messages"
+        aria-multiselectable="true"
         className="flex-1 overflow-y-auto"
       >
         {filteredMessages.length === 0 ? (
@@ -247,9 +248,9 @@ export function InboxList() {
         )}
       </div>
 
-      {/* Keyboard hint footer */}
-      <div className="px-4 py-2 border-t border-[#f1f3f4] bg-[#fafafa]">
-        <p className="text-xs text-[#bdc1c6] text-center">
+      {/* Keyboard hint footer — desktop only */}
+      <div className="hidden md:block px-4 py-2 border-t border-[#f1f3f4] bg-[#fafafa]">
+        <p className="text-xs text-[#6b7280] text-center">
           <kbd className="font-mono">j/k</kbd> navigate ·{' '}
           <kbd className="font-mono">/</kbd> search ·{' '}
           <kbd className="font-mono">Enter</kbd> open

@@ -83,7 +83,7 @@ export function DebugPanel({ messageId }: DebugPanelProps) {
         <div className="flex items-center gap-2 text-xs">
           <span className="text-[#92400e] font-medium">Schema</span>
           {status === 'loading' ? (
-            <span className="text-[#9aa0a6]">Validating…</span>
+            <span className="text-[#6b7280]">Validating…</span>
           ) : debugInfo ? (
             debugInfo.validationPassed ? (
               <span className="flex items-center gap-1 text-[#137333] font-medium">
@@ -95,7 +95,7 @@ export function DebugPanel({ messageId }: DebugPanelProps) {
               </span>
             )
           ) : (
-            <span className="text-[#9aa0a6]">No data yet</span>
+            <span className="text-[#6b7280]">No data yet</span>
           )}
         </div>
 

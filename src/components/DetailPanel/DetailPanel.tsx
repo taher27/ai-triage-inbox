@@ -70,10 +70,11 @@ function SelectPill({
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export function DetailPanel() {
-  const message       = useInboxStore(selectSelectedMessage);
+  const message        = useInboxStore(selectSelectedMessage);
   const updateStatus   = useInboxStore((s) => s.updateStatus);
   const updatePriority = useInboxStore((s) => s.updatePriority);
   const updateNotes    = useInboxStore((s) => s.updateNotes);
+  const selectMessage  = useInboxStore((s) => s.selectMessage);
 
   const selectedId = useInboxStore((s) => s.selectedId)!;
   const notes = useInboxStore(selectNotes(selectedId));
@@ -84,7 +85,16 @@ export function DetailPanel() {
     <div className="flex flex-col h-full overflow-hidden">
 
       {/* ── Sticky header ─────────────────────────────────────────────── */}
-      <div className="flex-shrink-0 border-b border-[#e8eaed] bg-white px-6 pt-5 pb-4">
+      <div className="flex-shrink-0 border-b border-[#e8eaed] bg-white px-4 pt-4 pb-4 md:px-6 md:pt-5">
+
+        {/* Mobile back button — hidden on md+ */}
+        <button
+          onClick={() => selectMessage(null)}
+          aria-label="Back to inbox"
+          className="md:hidden flex items-center gap-1 text-sm text-[#1a73e8] mb-3 -ml-0.5 px-1.5 py-1 rounded-md hover:bg-[#e8f0fe] transition-colors"
+        >
+          ← Back
+        </button>
 
         {/* Subject */}
         <h2 className="text-lg font-normal text-[#202124] leading-snug mb-3 pr-4">
@@ -109,7 +119,7 @@ export function DetailPanel() {
                   &lt;{message.sender.email}&gt;
                 </span>
               </p>
-              <p className="text-xs text-[#9aa0a6]">{message.sender.company}</p>
+              <p className="text-xs text-[#6b7280]">{message.sender.company}</p>
             </div>
           </div>
 
@@ -121,7 +131,7 @@ export function DetailPanel() {
             >
               {formatRelativeTime(message.receivedAt)}
             </p>
-            <p className="text-xs text-[#9aa0a6] mt-0.5">
+            <p className="text-xs text-[#6b7280] mt-0.5">
               {CHANNEL_LABEL[message.channel] ?? message.channel}
             </p>
           </div>

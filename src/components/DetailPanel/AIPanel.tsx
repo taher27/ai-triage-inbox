@@ -127,7 +127,7 @@ export function AIPanel({ messageId }: AIPanelProps) {
         <div className="rounded-xl border border-[#e8eaed] bg-[#fafafa] p-5 space-y-3">
           <div className="flex items-center gap-2 mb-2">
             <span className="inline-block w-2 h-2 rounded-full bg-[#1a73e8] animate-ping" />
-            <span className="text-xs text-[#9aa0a6]">Analyzing message…</span>
+            <span className="text-xs text-[#6b7280]">Analyzing message…</span>
           </div>
           {/* Summary skeleton */}
           <Skeleton className="h-2.5 w-1/3 rounded" />
@@ -174,7 +174,7 @@ export function AIPanel({ messageId }: AIPanelProps) {
 
           {/* Summary bullets */}
           <div className="px-4 pt-4 pb-3 border-b border-[#f1f3f4]">
-            <p className="text-xs font-semibold text-[#9aa0a6] uppercase tracking-wide mb-2.5">
+            <p className="text-xs font-semibold text-[#6b7280] uppercase tracking-wide mb-2.5">
               Summary
             </p>
             <ul className="space-y-1.5 pl-1" role="list">
@@ -198,14 +198,14 @@ export function AIPanel({ messageId }: AIPanelProps) {
               </span>
             </div>
             <div>
-              <p className="text-xs text-[#9aa0a6] mb-1">Confidence</p>
+              <p className="text-xs text-[#6b7280] mb-1">Confidence</p>
               <ConfidenceBar value={result.confidence} />
             </div>
           </div>
 
           {/* Suggested action */}
           <div className="px-4 py-3 border-b border-[#f1f3f4]">
-            <p className="text-xs font-semibold text-[#9aa0a6] uppercase tracking-wide mb-1.5">
+            <p className="text-xs font-semibold text-[#6b7280] uppercase tracking-wide mb-1.5">
               Suggested Action
             </p>
             <p className="text-sm text-[#202124] leading-relaxed">
@@ -216,7 +216,7 @@ export function AIPanel({ messageId }: AIPanelProps) {
           {/* Draft reply */}
           <div className="px-4 pt-3 pb-4">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-xs font-semibold text-[#9aa0a6] uppercase tracking-wide">
+              <p className="text-xs font-semibold text-[#6b7280] uppercase tracking-wide">
                 Draft Reply
               </p>
               <div className="flex items-center gap-1.5">
@@ -264,7 +264,7 @@ export function AIPanel({ messageId }: AIPanelProps) {
             </div>
 
             {userEditedDraft && !isStreaming && (
-              <p className="text-xs text-[#9aa0a6] mt-1.5">
+              <p className="text-xs text-[#6b7280] mt-1.5">
                 * You've edited this draft. Click ↺ Regenerate to start fresh.
               </p>
             )}

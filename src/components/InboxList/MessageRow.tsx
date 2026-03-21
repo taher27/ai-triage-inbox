@@ -87,12 +87,12 @@ function MessageRowInner({
             isNew ? 'font-semibold text-[#202124]' : 'font-medium text-[#3c4043]',
           )}>
             {message.sender.name}
-            <span className="ml-1 font-normal text-[#9aa0a6] text-xs">
+            <span className="ml-1 font-normal text-[#6b7280] text-xs">
               · {message.sender.company}
             </span>
           </span>
           <span
-            className="flex-shrink-0 text-xs text-[#9aa0a6]"
+            className="flex-shrink-0 text-xs text-[#6b7280]"
             title={formatFullTime(message.receivedAt)}
           >
             {formatRelativeTime(message.receivedAt)}
