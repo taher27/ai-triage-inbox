@@ -40,14 +40,14 @@ const CHANNEL_LABEL: Record<string, string> = {
 function SelectPill({
   value,
   options,
-  colorCls,
+  // colorCls,
   bgCls,
   ariaLabel,
   onChange,
-}: {
+} : {
   value: string;
   options: { value: string; label: string }[];
-  colorCls: string;
+  // colorCls: string;
   bgCls: string;
   ariaLabel: string;
   onChange: (v: string) => void;
@@ -142,7 +142,7 @@ export function DetailPanel() {
           <SelectPill
             value={message.status}
             options={STATUS_OPTIONS}
-            colorCls={STATUS_OPTIONS.find((o) => o.value === message.status)?.color ?? ''}
+            // colorCls={STATUS_OPTIONS.find((o) => o.value === message.status)?.color ?? ''}
             bgCls={STATUS_BG[message.status]}
             ariaLabel="Message status"
             onChange={(v) => updateStatus(message.id, v as Status)}
@@ -150,7 +150,7 @@ export function DetailPanel() {
           <SelectPill
             value={message.priority}
             options={PRIORITY_OPTIONS}
-            colorCls={PRIORITY_OPTIONS.find((o) => o.value === message.priority)?.color ?? ''}
+            // colorCls={PRIORITY_OPTIONS.find((o) => o.value === message.priority)?.color ?? ''}
             bgCls={PRIORITY_BG[message.priority]}
             ariaLabel="Message priority"
             onChange={(v) => updatePriority(message.id, v as Priority)}

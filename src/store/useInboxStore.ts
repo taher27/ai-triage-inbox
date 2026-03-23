@@ -48,7 +48,7 @@ const defaultAIState = (): AIState => ({
   debugInfo: null,
 });
 
-export const useInboxStore = create<InboxState>((set, get) => ({
+export const useInboxStore = create<InboxState>((set) => ({
   messages,
   selectedId: null,
   aiCache: {},

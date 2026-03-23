@@ -79,7 +79,7 @@ export function DebugPanel({ messageId }: DebugPanelProps) {
           </span>
         </div>
 
-        {/* Schema validation */}
+        {/* Schema-validation */}
         <div className="flex items-center gap-2 text-xs">
           <span className="text-[#92400e] font-medium">Schema</span>
           {status === 'loading' ? (
@@ -100,14 +100,14 @@ export function DebugPanel({ messageId }: DebugPanelProps) {
         </div>
 
         {/* Validation errors */}
-        {debugInfo?.validationErrors && (
+        {debugInfo?.validationErrors ? (
           <div className="rounded-lg border border-[#f5c6c4] bg-[#fce8e6] px-3 py-2">
             <p className="text-xs font-semibold text-[#c5221f] mb-1">Validation Errors</p>
             <pre className="text-xs text-[#c5221f] whitespace-pre-wrap font-mono overflow-x-auto max-h-32">
               {JSON.stringify(debugInfo.validationErrors, null, 2)}
             </pre>
           </div>
-        )}
+        ) : null}
 
         {/* Raw response */}
         {debugInfo?.rawResponse !== undefined && (
